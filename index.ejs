@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+  <div id="main">
+    <div id="left">
+      <h1>Visual Code Studio</h1>
+      <div id="lnav">
+        <h4>Folder Name</h4>
+        <div id="icn">
+          <i id="fileicn" class="ri-file-2-line"></i>
+          <i id="foldericn" class="ri-folder-fill"></i>
+          <a href="/"><i id="refreshicn" class="ri-refresh-line"></i></a>
+        </div>
+      </div>
+      <div id="files">
+        <% files.forEach(function(file){ %>
+          <% if(file.isFolder === true){ %>
+            <div id="file">
+              <h4 ><i id="fileicn" class="ri-folder-2-line"></i><%= file.name %></h4>
+              <div id="icn"><i class="ri-pencil-line"></i><i id="deleteicn" class="ri-delete-bin-line"></i></div>
+            </div>
+          <% } else{ %>
+            <div id="file">
+              <a href="/file/<%= file.name %>"><h4><i id="foldericn" class="ri-file-fill"></i><%= file.name %></h4></a>
+              <div id="icn"><i class="ri-pencil-line"></i><i id="deleteicn" class="ri-delete-bin-line"></i></div>
+            </div>
+          <% } %>
+        <% }) %>
+      </div>
+      <div id="forms">
+          <form id="fileform" action="/createfile">
+            <input type="text" name="filename" placeholder="filename">
+          </form>
+          <form id="folderform" action="/createfolder">
+            <input type="text" name="foldername" placeholder="foldername">
+          </form>
+      </div>
+    </div>
+    <div id="right">
+      <h4>nothing to show here</h4>
+    </div>
+  </div>
+
+
+
+  <script>
+    function onoff(){
+      document.querySelectorAll("form").forEach(function(e){
+        e.style.display="none";
+      })
+    }
+    document.querySelector("#fileicn").addEventListener("click",function(){
+      onoff();
+      document.querySelector("#fileform").style.display="initial";
+    })
+    document.querySelector("#foldericn").addEventListener("click",function(){
+      onoff();
+      document.querySelector("#folderform").style.display="initial";
+    })
+    document.querySelector("#deleteicn").addEventListener("click",function(){
+      // onoff();
+      document.querySelector("#files").style.display="none";
+    })
+    window.addEventListener("keydown",function(dets){
+      if(dets.keyCode==27){
+        onoff();
+        document.querySelectorAll("input").forEach(function(elem){
+        elem.value="";
+      })
+      }
+    })
+  </script>
+</body>
+</html>
